@@ -3,3 +3,45 @@
 
 TODO: Write.
 
+\subsection{A1.1}
+
+\subsubsection{a}
+
+For all paths, it should always hold on every step of the path,
+the client should have its job somewhere in the queue.
+
+\begin{verbatim}
+P>=1 [ G ((state1=1) => (job1=1|job2=1)) ]
+P>=1 [ G ((state2=1) => (job1=2|job2=2)) ]
+\end{verbatim}
+
+\subsubsection{b}
+
+The properties hold according to PRISM.
+
+\subsubsection{c}
+
+The queue for the SRT scheduler is different.
+"job1" being true means that a job for
+client 1 is in the queue,
+while "job2" being true means that a taskjobfor
+client 2 is in the queue.
+
+When client 1 is active,
+it means that "state1" is true.
+Since we require that when a client is active,
+its job is in the scheduler's queue,
+that means that "state1" implies "job1"
+everywhere, or in other words, for all paths
+always, "state1" implies "job1".
+Repeat for client 2.
+
+\begin{verbatim}
+P>=1 [ G ((state1=1) => job1) ]
+P>=1 [ G ((state2=1) => job2) ]
+\end{verbatim}
+
+\subsubsection{d}
+
+The properties hold according to PRISM.
+
