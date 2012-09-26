@@ -3,3 +3,31 @@
 
 TODO: Write.
 
+\subsection{A2.4}
+
+\begin{verbatim}
+
+mdp
+
+label "phi1" = s=0 | s=3;
+label "phi2" = s=1 | s=3;
+
+module ts1
+  
+  s : [0..3] init 0;
+
+  [] s=0 -> (s'=1);
+  [] s=0 -> (s'=2);
+  [] s=1 -> (s'=1);
+  [] s=2 -> (s'=2);
+  [] s=2 -> (s'=3);
+  [] s=3 -> (s'=3);
+
+endmodule
+
+system
+  ts1
+endsystem
+
+\end{verbatim}
+
