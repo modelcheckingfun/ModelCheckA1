@@ -3,3 +3,38 @@
 
 TODO: Write.
 
+\subsection{A2.1}
+
+\subsubsection{a}
+
+$S = \{s_0, s_1, s_2, s_3\}$
+
+$\rightarrow = \{
+  (s_0, s_1), (s_0, s_2),
+  (s_1, s_1),
+  (s_2, s_2), (s_2, s_3),
+  (s_3, s_3)
+\}$
+
+$S_0 = \{s_0\}$
+
+$AP = \{\Phi_1, \Phi_2\}$
+
+$L = \{
+  (s_0, \{\Phi_1\}),
+  (s_1, \{\Phi_2\}),
+  (s_2, \{\}),
+  (s_3, \{\Phi_1, \Phi_2\})
+\}$
+
+\subsubsection{b}
+
+i.: "For all paths, $\Phi_2$ eventually holds". False, since $\Phi_2$ never holds on the path $s_0{s_2}^w$.
+
+ii.: "For all paths, $\Phi_2$ holds in the next state". False, since $\Phi_2$ does not hold
+     in the second state of the initial path fragment $s_0s_2$.
+
+iii.: "For at least one path, $\Phi_1$ eventually holds". True, since $\Phi_1$ holds in $s_0$.
+
+iv.: "For all paths, $\Phi_1$ holds until $\Phi_2$". False, since $\Phi_2$ never holds on the path $s_0{s_2}^w$.
+
