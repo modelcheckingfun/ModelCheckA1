@@ -45,3 +45,34 @@ P>=1 [ G ((state2=1) => job2) ]
 
 The properties hold according to PRISM.
 
+\subsection{A1.4}
+
+\subsubsection{a}
+
+$\Phi$ holding for a transition system means that $\Phi$ holds
+in all initial states.
+
+$AG \Phi$ holding for a transition system means that $\Phi$ holds
+for all states reachable from the initial states.
+
+\subsubsection{b}
+
+In PRISM 4.0.*, a property is verified for all the initial states.
+meaning that the meanings of $\Phi$ and $AG \Phi$ are different
+
+\subsubsection{c}
+
+Give $s$ an atomic proposition with a unique name,
+maybe $initialstate$, and then define $\Phi '$ thus:
+
+$initialstate \implies \Phi$
+
+This will ensure that $\Phi$ is only checked for $s$,
+despite checking $\Phi '$ for all states.
+
+\subsubsection{d}
+
+Define $\Phi '$ thus:
+
+$AG \Phi$
+
