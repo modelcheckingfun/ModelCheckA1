@@ -45,6 +45,60 @@ P>=1 [ G ((state2=1) => job2) ]
 
 The properties hold according to PRISM.
 
+\subsection{A1.2}
+
+\subsubsection{a}
+
+The scheduler module should be modified
+to cope with an extra clint, however the length of
+the queue shouldn't be increased.
+
+A new module for the new client must be created. This is
+done by making a copy of the client1 module called client3.
+Then the first and second job in the queue must be modified
+to handle the new client. This is done by increasing the length
+from 2 to 3. When placing a new job at the end of the queue, this
+new job needs to be able to be placed by client3.
+
+\begin{verbatim}
+[create3] job2=0 -> (job2'=3);
+\end{verbatim}
+
+The job served at the head of the queue (job1) needs to be modified
+so it corresponds to the job placed by client3 is executed.
+
+\begin{verbatim}
+[serve3] job1=3 -> true;
+\end{verbatim}
+
+The job at the head of the queue needs to finish if it's been placed
+by client3
+
+\begin{verbatim}
+[finish3] job1=3 -> (job1'=0);
+\end{verbatim}
+
+Last but not least client3 is required to run in parallel as client2
+
+\begin{verbatim}
+system
+  scheduler || client1 || client2 || client3
+endsystem
+\end{verbatim}
+
+\subsubsection{b}
+
+There's 214 reachable states in the model as we assume PRISM removes all non-reachable states
+
+\subsubsection{c}
+
+The scheduler cannot create a new job if the queue is full, because the scheduler
+requires job2 to be 0 before it can place a new job at the end of the queue.
+
+\subsubsection{d}
+
+The properties hold according to PRISM.
+
 \subsection{A1.4}
 
 \subsubsection{a}
