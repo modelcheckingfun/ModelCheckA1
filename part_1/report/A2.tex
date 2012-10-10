@@ -38,6 +38,139 @@ iii.: "For at least one path, $\Phi_1$ eventually holds". True, since $\Phi_1$ h
 
 iv.: "For all paths, $\Phi_1$ holds until $\Phi_2$". False, since $\Phi_2$ never holds on the path $s_0{s_2}^w$.
 
+\subsection{A2.2}
+
+\subsubsection{a}
+
+Equivalent; reasoning by arguing for equivalence with initial path fragment.
+
+The initial path fragment consists of an initial state $s_0$,
+followed by $n$ states, $n \ge 1$, where the $n$'th state
+is the first of the $n$ states to have $\Phi$ true.
+Something like: $s_0 ( s_1 s_2 s_3 .. s_n ), s_n \models \Phi$.
+
+Formula 1 is equivalent with the initial path fragment:
+The formula says that there exists a path with a successor state,
+and for the successor state there exists a path with $\Phi$
+holding eventually.
+Any witness for this formula would then consist of two path fragments;
+one from the initial state to the next, and one from the next
+to some state, with $\Phi$ holding in that state.
+This fits exactly with the initial path fragment.
+
+Formula 2 is equivalent with the initial path fragment:
+The formula says that there exists a path where it eventually holds,
+that there exists a path with a successor state with $\Phi$.
+Any witness for this formula would then consist of two path fragments;
+one from the initial state to some other state,
+and one from the other state to the next, with $\Phi$ holding in that state.
+This fits exactly with the initial path fragment.
+
+By transitivity, formula 1 is equivalent with formula 2.
+
+\subsubsection{b}
+
+Equivalent; reasoning by arguing for equivalence with prefix computation tree, called $a$.
+
+The computation tree is some tree, where for all leaves $\Phi$ holds,
+and where all leaves are of depth at least 1.
+
+Formula 1 and $a$:
+Formula 1 says that for all paths, in the next state it must hold,
+that for all paths $\Phi$ eventually holds.
+Any witness is a prefix computation tree,
+where for all the depth-1 nodes it holds,
+that $\Phi$ holds for the leaves in their subtrees.
+This fits exactly with $a$.
+
+Formula 2 and $a$:
+Formula 2 says that for all paths it must eventually hold,
+that for all paths, in the next state $\Phi$ must hold.
+Any witness is a prefix computation tree,
+where for all leaves $\Phi$ holds,
+and where all leaves are of depth at least 1.
+This fits exactly with the prefix computation tree.
+
+By transitivity, formula 1 is equivalent with formula 2.
+
+\subsubsection{c}
+
+Neither implies the other.
+
+Transition system where formula 1 holds and formula 2 does not hold:
+
+$S = \{s_0, s_1\}$
+
+$\rightarrow = \{
+  (s_0, s_1), (s_1, s_0)
+\}$
+
+$S_0 = \{s_0\}$
+
+$AP = \{\Phi\}$
+
+$L = \{
+  (s_0, \{\Phi\})
+\}$
+
+Transition system where formula 2 holds and formula 1 does not hold:
+
+$S = \{s_0, s_1, s_2\}$
+
+$\rightarrow = \{
+  (s_0, s_1), (s_0, s_2),
+  (s_1, s_1),
+  (s_2, s_2)
+\}$
+
+$S_0 = \{s_0\}$
+
+$AP = \{\Phi\}$
+
+$L = \{
+  (s_1, \{\Phi\})
+\}$
+
+\subsubsection{d}
+
+Equivalent; $\Phi_1$ and $\Phi_2$ must hold everywhere we can reach.
+Another argument; distributive laws.
+
+\subsubsection{e}
+
+Formula 1 implies formula 2, but formula 2 does not imply formula 1.
+
+Argument for formula 1 implies formula 2:
+
+If formula 1 holds, then there exists at least one path,
+where at some point at that path, both $\Phi_1$ and $\Phi_2$ holds.
+Something like, $s_0s_1s_2..s_n$, and $\Phi_1$ and $\Phi_2$ holds in $s_n$.
+But that also means formula 2 holds, since there exists a path
+where at some point $\Phi_1$ holds, and likewise for $\Phi_2$.
+
+Argument for formula 2 does not imply formula 1:
+
+Transition system:
+
+$S = \{s_0, s_1, s_2\}$
+
+$\rightarrow = \{
+  (s_0, s_1), (s_0, s_2),
+  (s_1, s_1),
+  (s_2, s_2)
+\}$
+
+$S_0 = \{s_0\}$
+
+$AP = \{\Phi_1, \Phi_2\}$
+
+$L = \{
+  (s_1, \{\Phi_1\}),
+  (s_2, \{\Phi_2\})
+\}$
+
+Formula 2 holds, but formula 1 does not.
+
 \subsection{A2.4}
 
 See appendix "A2.4".
