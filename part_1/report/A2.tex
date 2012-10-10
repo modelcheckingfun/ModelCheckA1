@@ -171,6 +171,54 @@ $L = \{
 
 Formula 2 holds, but formula 1 does not.
 
+\subsection{A2.3}
+
+\subsubsection{a}
+
+$EGF \Phi$
+
+Not valid CTL+ formula (see page 426 of Principles of Model Checking),
+but this CTL formula should be equivalent:
+
+$\neg AF (AG \neg \Phi)$
+
+The reasoning is as follows:
+It is NOT true, that no matter which path is taken,
+at some point, $\Phi$ will never again be true.
+Basically, negating the exact opposite of "some path exists where
+$\Phi$ holds infinitely often".
+
+
+\subsubsection{b}
+
+$A ( \Phi_1 U ( \Phi_2 \wedge O \Phi_3) )$
+
+Maybe no.
+Not valid CTL+ formula.
+
+\subsubsection{c}
+
+$E (F \Phi_1 \vee F \Phi_2)$
+
+Valid CTL+ formula, so also possible to express in CTL:
+
+$EF \Phi_1 \vee EF \Phi_2$
+
+\subsubsection{d}
+
+$A (G \Phi_1 \vee G \Phi_2)$
+
+Valid CTL+ formula, so also possible to express in CTL:
+
+$\neg EF ( \neg \Phi_1 \wedge EF \neg \Phi_2) \wedge
+\neg EF ( \neg \Phi_2 \wedge EF \neg \Phi_1)$
+
+Basically, counter-examples is that there exists a path
+where first $\Phi_1$ fails at some point, and then $\Phi_2$ fails at some point,
+or the other way round.
+So, to write an equivalent CTL-formula,
+require that the counter-examples may never be true.
+
 \subsection{A2.4}
 
 See appendix "A2.4".
