@@ -1,0 +1,80 @@
+\section{B1}
+
+\subsection{B1.1}
+
+In this part we need to the SRT scheduler to act as a round-robin scheduler.
+
+\subsubsection{a}
+
+First we modify the serve commands so the scheduler executes jobs like a round-robin scheduler.
+
+\begin{verbatim}
+// Serve a job for a unit of time
+[serve1] job1=true & execute=1 -> (execute'=2);
+[serve2] job2=true & execute=2 -> (execute'=1);
+\end{verbatim}
+
+\subsubsection{b}
+
+Next we make changes to create and finish commands. The modules can be seen in the Appendix.
+
+\subsubsection{c}
+The model has 98 reachable states.
+
+\subsubsection{d}
+The properties previously verified for the FCFS and SRT schedulers were modified and they hold in the initial state.
+
+\begin{verbatim}
+P>=1 [ G (!(state1=1)|(job1=true)) ]
+P>=1 [ G (!(state2=1)|(job2=true)) ]
+\end{verbatim}
+
+\subsection{B1.2}
+
+In this part we need to extend the FCFS scheduler to handle tasks with two different priority levels.
+
+\subsubsection{a}
+
+The Client module needs to be extended to create tasks with two different priority levels. We did this
+by creating a priority variable with the length of two.
+
+\begin{verbatim}
+priority1 : [0..1] init 0; //Priority of a job
+  
+  // Create a new job - length and priority chose non-deterministically
+  [create1] state1=0 -> (state1'=1) & (task1'=1) & (priority1'=0);
+  [create1] state1=0 -> (state1'=1) & (task1'=1) & (priority1'=1);
+  [create1] state1=0 -> (state1'=1) & (task1'=2) & (priority1'=0);
+  [create1] state1=0 -> (state1'=1) & (task1'=2) & (priority1'=1);
+  [create1] state1=0 -> (state1'=1) & (task1'=3) & (priority1'=0);
+  [create1] state1=0 -> (state1'=1) & (task1'=3) & (priority1'=1);
+  [create1] state1=0 -> (state1'=1) & (task1'=4) & (priority1'=0);
+  [create1] state1=0 -> (state1'=1) & (task1'=4) & (priority1'=1);
+  [create1] state1=0 -> (state1'=1) & (task1'=5) & (priority1'=0);
+  [create1] state1=0 -> (state1'=1) & (task1'=5) & (priority1'=1);
+\end{verbatim}
+
+\subsubsection{b}
+
+The Scheduler module needs to be modified so when a new job arrives, it needs to be moved ahead
+of any lower priority jobs that are in the queue.
+
+\begin{verbatim}
+  // Place a new job at the end of the queue
+  [create1] job2=0 & job1=0 -> (job2'=1);
+  [create1] job2=0 & job1=2 & priority1<=priority2 -> (job2'=1);
+  [create1] job2=0 & job1=2 & priority1>priority2 -> (job1'=1) & (job2'=2);
+  [create2] job2=0 & job1=0 -> (job2'=2);
+  [create2] job2=0 & job1=1 & priority2<=priority1 -> (job2'=2);
+  [create2] job2=0 & job1=1 & priority2>priority1 -> (job1'=2) & (job2'=1);
+\end{verbatim}
+
+The full modules can be seen in the Appendix.
+
+\subsubsection{c}
+
+The model has 360 reachable states.
+
+\subsubsection{d}
+
+The properties previously verified for the FCFS scheduler holds.
