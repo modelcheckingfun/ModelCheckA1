@@ -1,0 +1,73 @@
+\section{C}
+
+\subsection{C1}
+
+In this problem we need to modify the round-robin scheduler so it includes priorities. Furthermore
+this scheduler should avoid starvation.
+The Client module is unchanged. All the modifications are made in the scheduler.
+First we include priorities and time into the scheduler to avoid starvation.
+\begin{verbatim}
+  priority1 : [1..2] init 1;
+  priority2 : [1..2] init 1;
+
+  time1 : [1..2] init 1;
+  time2 : [1..2] init 1;
+\end{verbatim}
+
+When we create a job then the priority and time is set to either 1 or 2.
+We have an index which points to, if either job1 or job2 should be executed.
+If job1 is true and currentQueueIndex=1 and the time of the job is larger than 1 then we
+subtract it with one time unit and execute the job.
+If job1 is true and currentQueueIndex=1 and the time of the job is equal to 1, then we execute the job, 
+assign currentQueueIndex to 2 and assign the time of the job to the priority.
+We do this to ensure that job2 can be executed. We also do this vice versa with job2,
+to ensure job1 can be executed.
+\begin{verbatim}
+  // Serve the current job and shift the index
+  [serve1] job1 & currentQueueIndex=1 & time1>1 -> (time1'=time1-1);
+  [serve1] job1 & currentQueueIndex=1 & time1=1 -> (currentQueueIndex'=2)
+   & (time1'=priority1);
+  [serve2] job2 & currentQueueIndex=2 & time2>1 -> (time2'=time2-1);
+  [serve2] job2 & currentQueueIndex=2 & time2=1 -> (currentQueueIndex'=1)
+   & (time2'=priority2);
+\end{verbatim}
+When we complete a job, then if job1 equals true and currentQueueIndex equals 1, then 
+job1 is assigned false and currentQueueIndex is assigned to 2.
+\begin{verbatim}
+  // Complete any job that has finished
+  [finish1] job1=true & currentQueueIndex=1 -> (job1'=false)
+   & (currentQueueIndex'=2);
+  [finish1] job1=true & currentQueueIndex!=1 -> (job1'=false);
+  [finish2] job2=true & currentQueueIndex=2 -> (job2'=false)
+   & (currentQueueIndex'=1);
+  [finish2] job2=true & currentQueueIndex!=2 -> (job2'=false);
+\end{verbatim}
+The full modules can be seen in the Appendix.
+The implications of avoiding starvation is that at some point a job will be executed.
+We've specified some additional properties of the scheduler in CTL:
+
+$AG(state1=1 \Rightarrow (AF(state1=0)))$ \newline
+This formula means that for paths, it's always the case that whenever state1 equals 1,
+then it implies that, for all paths eventually state1 equals 0.
+
+$AG(state2=1 \Rightarrow (AF(state2=0)))$ \newline
+This formula means that for paths, it's always the case that whenever state2 equals 1,
+then it implies that, for all paths eventually state2 equals 0.
+
+$AG(EF(state1=0))$ \newline
+This formula means that for paths, it's always the case that, there exists eventually
+a state where state1 equals 0.
+
+$AG(EF(state2=0))$ \newline
+This formula means that for paths, it's always the case that, there exists eventually
+a state where state2 equals 0.
+
+$AG(state1=1 \Rightarrow job1) \& (job1=>state1=1))$ \newline
+This formula means that for paths, it's always the case that, whenever state1 equals 1,
+then it implies job1 is true and whenever job1 is true, then it implies that
+state1 equals 1.
+
+$AG(state2=1 \Rightarrow job2) \& (job2=>state2=1))$ \newline
+This formula means that for paths, it's always the case that, whenever state2 equals 1,
+then it implies job2 is true and whenever job2 is true, then it implies that
+state2 equals 1.
