@@ -1,8 +1,6 @@
 
 \section{A1}
 
-TODO: Write.
-
 \subsection{A1.1}
 
 \subsubsection{a}
@@ -98,6 +96,36 @@ requires job2 to be 0 before it can place a new job at the end of the queue.
 \subsubsection{d}
 
 The properties for the FCFS scheduler holds according to PRISM.
+
+\subsection{A1.3}
+
+\subsubsection{a}
+
+See appendix for source code. Changes are emphasized.
+
+We have added one job, which named job3 in the queue.
+We changed the scheduler to have the place for the job3. We
+make the scheduler has ability to shift the queue with three
+jobs when there is an empty slot between them. At last, added
+the client3 in to the system.
+
+We think, we did correct. It is, because the calculation shows the
+same result as the PRISM did.
+
+\subsubsection{b}
+
+As PRISM shows that there are 1459 reachable states in the
+new model.
+
+\subsubsection{c}
+
+The properties are no longer holds. It because tasks might be
+in job3.
+
+\subsubsection{d}
+
+The upper bound is $7^n (n + 1)^m$, where $n$ is the number of
+clients, $m$ is the length of the queue.
 
 \subsection{A1.4}
 
