@@ -4,7 +4,46 @@
 \(A)
 \R_{1,2} \subseteq S_1 \times S_2 = \{(S_0,S^'_0), (S_1,S^'_1),(S_2,S^'_1),(S_3,S^'_2),(S_4,S^'_3),(S_5,S^'_3),(S_1,S^'_2),(S_0,S^'_3),(S_2,S^'_2),(S_3,S^'_1),(S_4,S^'_0),(S_5,S^'_0),(S^'_0,S_0),(S^'_0,S_4),(S^'_0,S_5),(S^'_3,S_0),(S^'_3,S_4),(S^'_3,S_5),(S^'_1,S_1),(S^'_1,S_2),(S^'_1,S_3),(S^'_2,S_1),(S^'_2,S_2),(S^'_2,S_3)\}
 \(B)
-\
+\Property (1)
+\(S_1,S_2) \in R \rightarrow L_1(S_1) = L_2(S_2)
+\newline
+\L(S_0)=L(S^'_0)=\{(\phi_1)\}
+\L(S_1)=L(S^'_1)=\{(\phi_2)\}
+\L(S_2)=L(S^'_1)=\{(\phi_2)\}
+\L(S_3)=L(S^'_2)=\{(\phi_2)\}
+\L(S_4)=L(S^'_3)=\{(\phi_1)\}
+\L(S_5)=L(S^'_3)=\{(\phi_1)\}
+\States have same labelling function.
+\Property(2)
+\forall (S_1, S_2) \in R:
+\forall s^′1 \in Post(S_1) \exists S^′2 \in Post(S_2) s.t. (S^′1, S′2) \in R
+\newline
+\for (S_0, S^'_0)
+\S^'_1 \in Post(S_0)=\{(S_1),(S_2),(S_3)\}
+\S^'_2 \in Post(S^'_0)=\{(S^'_1),(S^'_2)\}
+\(S^'_1, S^_2) \in \{(S_1,S^'_1), (S_2,S^'_2),(S_3,S^'_2)\} \subseteq R.
+the same condition for (S_1,S^'_1), (S_2,S^'_1), (S_3,S^'_2), (S_4,S^'_3), (S_5,S^'_3)
+\newline
+\Property (3)
+\forall (S_1, S_2) \in R:
+\forall s^′2 \in Post(S_2) \exists S^′1 \in Post(S_1) s.t. (S^′1, S′2) \in R
+\newline
+\for (S_0, S^'_0)
+\S^'_2 \in Post(S^'_0)=\{(S^'_1),(S^'_2)\}
+\S^'_1 \in Post(S_0)=\{(S_1),(S_2),(S_3)\}
+\(S^'_1, S^_2) \in \{(S_1,S^'_1), (S_2,S^'_2),(S_3,S^'_2)\} \subseteq R.
+the same condition for (S_1,S^'_1), (S_2,S^'_1), (S_3,S^'_2), (S_4,S^'_3), (S_5,S^'_3)
+\newline
+\Property(I) \forall initial states S_1 of T 1 there is an initial state S_2 of T 2 with (S_1, S_2) \in R, and vice versa.
+\newline
+\as above proved that all properties are verified, this imply T1 and T2 are bisimulation relation. Since we have mapped all the states in M1 is related to a state in M2, so they are maximal.
+\newline
+\(C)
+
+
+
+
+
 \subsection{B2.2}
 
 First, the formula is converted into existential normal form:
