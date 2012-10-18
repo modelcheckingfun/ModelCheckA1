@@ -1,62 +1,119 @@
 
 \section{B2}
-\subsection{B2.1}
-\(A)
-\R_{1,2} \subseteq S_1 \times S_2 = \{(S_0,S^'_0), (S_1,S^'_1),(S_2,S^'_1),(S_3,S^'_2),(S_4,S^'_3),(S_5,S^'_3),(S_1,S^'_2),(S_0,S^'_3),(S_2,S^'_2),(S_3,S^'_1),(S_4,S^'_0),(S_5,S^'_0),(S^'_0,S_0),(S^'_0,S_4),(S^'_0,S_5),(S^'_3,S_0),(S^'_3,S_4),(S^'_3,S_5),(S^'_1,S_1),(S^'_1,S_2),(S^'_1,S_3),(S^'_2,S_1),(S^'_2,S_2),(S^'_2,S_3)\}
-\(B)
-\Property (1)
-\(S_1,S_2) \in R \rightarrow L_1(S_1) = L_2(S_2)
-\newline
-\L(S_0)=L(S^'_0)=\{(\phi_1)\}
-\L(S_1)=L(S^'_1)=\{(\phi_2)\}
-\L(S_2)=L(S^'_1)=\{(\phi_2)\}
-\L(S_3)=L(S^'_2)=\{(\phi_2)\}
-\L(S_4)=L(S^'_3)=\{(\phi_1)\}
-\L(S_5)=L(S^'_3)=\{(\phi_1)\}
-\States have same labelling function.
-\Property(2)
-\forall (S_1, S_2) \in R:
-\forall s^'1 \in Post(S_1) \exists S^'2 \in Post(S_2) s.t. (S^'1, S'2) \in R
-\newline
-\for (S_0, S^'_0)
-\S^'_1 \in Post(S_0)=\{(S_1),(S_2),(S_3)\}
-\S^'_2 \in Post(S^'_0)=\{(S^'_1),(S^'_2)\}
-\(S^'_1, S^_2) \in \{(S_1,S^'_1), (S_2,S^'_2),(S_3,S^'_2)\} \subseteq R.
-the same condition for (S_1,S^'_1), (S_2,S^'_1), (S_3,S^'_2), (S_4,S^'_3), (S_5,S^'_3)
-\newline
-\Property (3)
-\forall (S_1, S_2) \in R:
-\forall s^'2 \in Post(S_2) \exists S^'1 \in Post(S_1) s.t. (S^'1, S'2) \in R
-\newline
-\for (S_0, S^'_0)
-\S^'_2 \in Post(S^'_0)=\{(S^'_1),(S^'_2)\}
-\S^'_1 \in Post(S_0)=\{(S_1),(S_2),(S_3)\}
-\(S^'_1, S^_2) \in \{(S_1,S^'_1), (S_2,S^'_2),(S_3,S^'_2)\} \subseteq R.
-the same condition for (S_1,S^'_1), (S_2,S^'_1), (S_3,S^'_2), (S_4,S^'_3), (S_5,S^'_3)
-\newline
-\Property(I) \forall initial states S_1 of T 1 there is an initial state S_2 of T 2 with (S_1, S_2) \in R, and vice versa.
-\newline
-\as above proved that all properties are verified, this imply T1 and T2 are bisimulation relation. Since we have mapped all the states in M1 is related to a state in M2, so they are maximal.
-\newline
-\(C)
-\R_{1,1} \subseteq S_1 \times S_1 = \{(s_0,s^'_0),(s_0, s^'_4),(s_0, s^'_5),(s_4,s^'_0),(s_4,s^'_4),(s_4,s^'_5),(s_5,s^'_0),(s5,s^'_4),(s_5,s^'_5),(s_1,s^'_1),(s_1,s^'_2),(s_1,s_^'_3),(s_2,s^'1),(s_2,s^'_2),(s_2,s^'_3),(s_3,s^'_1),(s_3,s^'_2),(s_3,s^'_3),(s^'_0,s_0),(s^'_4,s_0),(s^'_5,s_0),(s^'_0,s_4),(s^'_4,s_4),(s^'_5,s_4),(s^'_0,s_5),(s^'_4,s_5),(s^'_5,s_5),(s^'1,s_1),(s^'_2,s_1),(s^'_3,s_1),(s^'_1,s_2),(s^'_2,s_2),(s^'_3,s_2),(s^'1,s_3),(s^'_2,s_3),(s^'_3,s_3)\}
-\newline
-\(D)
-\newline
-\R_{1,1} is matces the verified properties,which is same as proved at above the question C.
 
-\(E)
-\newline
-\begin{center}
-Bisimulation quotient M_1/\sim of M_1.
-\includegraphics{B2.png}
-\end{center}
-\newline
-\(F)
-\Yes, this is bisimilar to M_2. and the largest bisimulation relation between them are:(S_0,S^'_0),(S_0,S^'_3),(S_1,S^'_1),(S_1,S^'_2),(S^_0,S^0),(S^'_3,S_0),(S^'_1,S_1),(S^'_2,S_1)
-\begin{center}
-\includegraphics{B21F.png}
-\end{center}
+\subsection{B2.1}
+
+\subsubsection{A}
+
+$R_{1,2} \subseteq S_1 \times S_2 =$
+
+$\{(s_0,s'_0),(s_0,s'_3), (s_1,{s'}_1),(s_1,s'_2),(s_2,s'_1),(s_2,s'_2),(s_3,s'_1),(s_3,s'_2),$
+
+$(s_4,s'_0),(s_4,s'_3),(s_5,s'_0),(s_5,s'_3)\}$
+
+\subsubsection{B}
+
+Property (1):
+
+$(s_1,s_2) \in R \rightarrow L_1(s_1) = L_2(s_2)$
+
+$L(s_0)=L(s'_0)=L(s'_3)=\{(\phi_1)\}$
+
+$L(s_1)=L(s'_1)=L(s'_2)=\{(\phi_2)\}$
+
+$L(s_2)=L(s'_1)=L(s'_2)=\{(\phi_2)\}$
+
+$L(s_3)=L(s'_1)=L(s'_2)=\{(\phi_2)\}$
+
+$L(s_4)=L(s'_0)=L(s'_3)=\{(\phi_1)\}$
+
+$L(s_5)=L(s'_0)=L(s'_3)=\{(\phi_1)\}$
+
+States have same labelling function.
+
+\indent
+
+\noindent
+Property(2):
+
+$\forall (s_1, s_2) \in R:$
+
+$\forall s'_1 \in Post(s_1): \exists s'_2 \in Post(s_2): (s'_1, s'_2) \in R$
+
+for $(s_0, s'_0):$
+
+$s'_1 \in Post(s_0)=\{(s_1),(s_2),(s_3)\}$
+
+$s'_2 \in Post(s'_0)=\{(s'_1),(s'_2)\}$
+
+$\{(s_1,s'_1), (s_2,s'_2),(s_3,s'_2)\} \subseteq R.$
+
+the same condition for the other pairs.
+
+\indent
+
+\noindent
+Property (3):
+
+$\forall (s_1, s_2) \in R:$
+
+$\forall s'_2 \in Post(s_2): \exists s'_1 \in Post(s_1): (s'_1, s'_2) \in R$
+
+for $(s_0, s'_0):$
+
+$s'_2 \in Post(s'_0)=\{(s'_1),(s'_2)\}$
+
+$s'_1 \in Post(s_0)=\{(s_1),(s_2),(s_3)\}$
+
+$\{(s_1,s'_1), (s_2,s'_2)\} \subseteq R.$
+
+the same condition for the other pairs.
+
+\indent
+
+\noindent
+Property (I):
+
+forall initial states $s_1$ of $M_1$ there is an initial state $s_2$ of $M_2$ with $(s_1, s_2) \in R$, and vice versa.
+
+\indent
+
+\noindent
+as above proved that all properties are verified, this imply $M_1$ and $M_2$ are bisimulation relation. Since we have mapped all the states in $M_1$ is related to a state in $M_2$, so they are maximal.
+
+\subsubsection{C}
+
+$R_{1,1} \subseteq S_1 \times S_1 = $
+
+$\{(s_0,s'_0),(s_0, s'_4),(s_0, s'_5),(s_4,s'_0),(s_4,s'_4),(s_4,s'_5),(s_5,s'_0),(s_5,s'_4),(s_5,s'_5),$
+
+$(s_1,s'_1),(s_1,s'_2),(s_1,s'_3),(s_2,s'_1),(s_2,s'_2),(s_2,s'_3),(s_3,s'_1),(s_3,s'_2),(s_3,s'_3)\}$
+
+\subsubsection{D}
+
+$R_{1,1}$ is matces the verified properties,which is same as proved at above the question C.
+
+\subsubsection{E}
+
+Bisimulation quotient $M_1/\sim$ of $M_1$:
+
+$S = \{s_0, s_1\}$
+
+$I = {s_0}$
+
+$\rightarrow = \{(s_0, s_1), (s_1, s_0)\}$
+
+$AP = \{\Phi_1, \Phi_2\}$
+
+$L = \{(s_0, \{\Phi_1\}), (s_1, \{\Phi_2\})\}$
+
+Largest because all states with same labellings are related.
+
+\subsubsection{F}
+
+Yes, this is bisimilar to $M_2$. and the largest bisimulation relation between them are:
+
+$(s_0,s'_0),(s_0,s'_3),(s_1,s'_1),(s_1,s'_2)$
 
 \subsection{B2.2}
 
