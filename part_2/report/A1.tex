@@ -1,0 +1,27 @@
+
+\section{A1}
+
+\subsection{A1.1}
+
+\subsubsection{a}
+
+We need to identify all the sources of non-determinism in the model. 
+
+At the guard create1 in the client module, there's non-determinism. The same applies to the guard create2.
+\begin{verbatim}
+// Create a new job - length chose non-deterministically
+  [create1] state1=0 -> (state1'=1) & (task1'=1);
+  [create1] state1=0 -> (state1'=1) & (task1'=2);
+  [create1] state1=0 -> (state1'=1) & (task1'=3);
+  [create1] state1=0 -> (state1'=1) & (task1'=4);
+  [create1] state1=0 -> (state1'=1) & (task1'=5);
+\end{verbatim}
+This is due to local non-determinism because this doesn't depend on the concurrent execution of two modules.
+
+In the module scheduler at the guard create1 and create2 there's non-determinism.
+\begin{verbatim}
+// Place a new job at the end of the queue
+  [create1] job2=0 -> (job2'=1);
+  [create2] job2=0 -> (job2'=2);
+\end{verbatim}
+This is due to local non-determinism because this doesn't depend on the concurrent execution of two modules.
