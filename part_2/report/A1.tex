@@ -26,6 +26,112 @@ In the module scheduler at the guard create1 and create2 there's non-determinism
 \end{verbatim}
 This is due to local non-determinism because this doesn't depend on the concurrent execution of two modules.
 
+\subsection{A1.2}
+
+\subsubsection{a}
+
+Using Model: Compute: Steady-state probabilities:
+
+\begin{verbatim}
+0:(0,0,0,0,0,0)=0.016145825133811565
+1:(0,0,1,0,2,0)=0.016145821765883802
+...
+\end{verbatim}
+
+The probability for no jobs in the queue is: $0.016145825133811565 = 1.6145825133811565\% \approx 1.61\%$
+This can be read directly from the steady-state probability for $(0,0,0,0,0,0)$,
+because $(0,0,0,0,0,0)$ is the only state in which job1 and job2 are zero,
+or it can be computed in PRISM by "verifying" the property:
+
+\begin{verbatim}
+S=? [job1=0 & job2=0]
+\end{verbatim}
+
+\subsubsection{b}
+
+We first find the steady-state probabilities for task1=0..5.
+This could also be done by manually summing for each i in 0..5
+the steady-state probabilities for the states where task1 = i.
+
+\begin{verbatim}
+p0 = S=? [task1=0] ~ 0.34140
+p1 = S=? [task1=1] ~ 0.16776
+p2 = S=? [task1=2] ~ 0.15057
+p3 = S=? [task1=3] ~ 0.13286
+p4 = S=? [task1=4] ~ 0.11411
+p5 = S=? [task1=5] ~ 0.09328
+\end{verbatim}
+
+The expected length is then found by
+multiplying the length with its steady-state probability:
+
+$0*p0 + 1*p1 + 2*p2 + 3*p3 + 4*p4 + 5*p5 =$
+
+$0.16776 + 2*0.15057 + 3*0.13286 + 4*0.11411 + 5*0.09328 =$
+
+$1.79032$
+
+\subsubsection{c}
+
+The transient distribution for time t = 10 is computed by
+selecting Model:Compute:"Transient probabilities"
+and giving the argument 10:
+
+\begin{verbatim}
+0:(0,0,0,0,0,0)=0.0175
+1:(0,0,1,0,2,0)=0.018750000000000003
+...
+\end{verbatim}
+
+We sum up the probabilities for state1=0 in the transient state probabilities:
+$0.0175 + 0.01875 + 0.008 + 0.04275 + 0.008 + 0.0415 + 0.008 + 0.039 + 0.008 + 0.034 + 0.008 + 0.024 =$
+
+$0.2575$
+
+The result fits with the "verification" of the property
+
+\begin{verbatim}P=? [ X X X X X X X X X X state1=0]\end{verbatim},
+
+which is written in PCTL*.
+
+\subsubsection{d}
+
+The probabilities are calculated using PCTL*.
+
+\begin{verbatim}
+1.0
+0.5
+0.5
+0.25
+0.15
+0.1625
+0.225
+0.259375
+0.283125
+0.3125
+0.2575
+\end{verbatim}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=.75]{images/chart_client1_nojob_time_prop.png}
+\caption{Probability for client one not having a job over discrete time}
+\label{fig:nojobprop}
+\end{figure}
+
+In the start, the client does not have a job.
+After that, the probability for not having a job falls a lot,
+since it is likely that client 1 gets a job in immediately
+or shortly after client 2 has gotten a job and has had its
+job move into the first queue field.
+
+After that, the probability rises, since client 1 could
+have had its job in the queue, and it becomes likely that
+its job is finished, thus meaning that it is not in the queue.
+
+After that, the probability begins to oscillate towards 0.25,
+since 0.25 is the steady-state probability of client 1 not having a job in the queue.
+
 \subsection{A1.4}
 
 \subsubsection{a}
