@@ -25,3 +25,64 @@ In the module scheduler at the guard create1 and create2 there's non-determinism
   [create2] job2=0 -> (job2'=2);
 \end{verbatim}
 This is due to local non-determinism because this doesn't depend on the concurrent execution of two modules.
+
+\subsection{A1.4}
+
+\subsubsection{a}
+
+$M$ is some discrete-time Markov chain (DTMC),
+$\Phi$ is some CTL formula.
+
+$T_M$ is the transition system obtained from the Markov chain
+by the following definitions:
+
+$S_{T_M} = S_M$
+
+$Act_{T_M} = \{\tau\}$
+
+$\to_{T_M} = \{(s_i, t, s_j) \in S_M \times Act_{T_M} \times S_M | P_M(i, j) > 0\}$
+
+$I_{T_M} = \{s_i \in S_M | {\iota_{init}}_M(i) > 0\}$
+
+$AP_{T_M} = AP_M$
+
+$L_{T_M} = L_M$
+
+We define a DTMC satisfying a CTL-formula as follows:
+
+$M \models \Phi$ if $T_M \models \Phi$
+
+\subsubsection{b}
+
+Example:
+
+$S = {s_0, s_1}$
+
+$P(0, \_) = [0.5, 0.5]$
+
+$P(1, \_) = [0.0, 1.0]$
+
+$\iota_{init} = [1.0, 0.0]$
+
+$AP = \{\Phi\}$
+
+$L = \{s_0 \to \{\Phi\}, s_1 \to \{\}\}$
+
+\subsubsection{c}
+
+The formula clearly holds for $EG \Phi$,
+since we start in $s_0$ and can stay there
+forever.
+
+The formula does not hold for $\neg P_{\leq 0} G \Phi \Leftrightarrow P_{>0} G \Phi$,
+since staying in $s_0$ forever is the only
+path where $\Phi$ holds forever,
+and the probability of that path is 0.
+
+\subsubsection{d}
+
+Fairness, in the sense that paths that are extremely unlikely (and thus "unfair")
+are excluded.
+That way, the "unfair" path that stays in $s_0$ forever would be excluded from consideration.
+CTL does not provide fairness, while fairness can be dealt with in LTL and CTL*.
+
