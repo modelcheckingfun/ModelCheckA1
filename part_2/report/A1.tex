@@ -24,7 +24,28 @@ In the module scheduler at the guard create1 and create2 there's non-determinism
   [create1] job2=0 -> (job2'=1);
   [create2] job2=0 -> (job2'=2);
 \end{verbatim}
-This is due to local non-determinism because this doesn't depend on the concurrent execution of two modules.
+This is due to the concurrent execution of two modules. Two actions are executed concurrently.
+
+\subsubsection{b}
+The local non-determinism is resolved by including probabilistic commands:
+\begin{verbatim}
+[create1] state1=0 -> 0.2 : (task1'=1) & (state1'=1) + 
+0.2 : (task1'=2) & (state1'=1) + 0.2 : (task1'=3) & (state1'=1) + 
+0.2 : (task1'=4) & (state1'=1) + 0.2 : (task1'=5) & (state1'=1);
+\end{verbatim}
+The uniform distribution is 0.2. The model can be seen in the appendix.
+
+\subsubsection{c}
+The model has 83 states.
+
+\subsubsection{d}
+They remain the same because they are different actions.
+
+\subsubsection{e}
+The qualitative PCTL formula holds for the model:
+\begin{verbatim}
+P=? [ (task1>0)=>(P>=1 [ F (task1=0) ]) ]
+\end{verbatim}
 
 \subsection{A1.2}
 

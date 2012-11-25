@@ -1,0 +1,53 @@
+
+\section{B1}
+
+\subsection{B1.2}
+
+\subsubsection{a}
+
+We need to modify the scheduler to assign different number of tickets to the different task to approximate an SRT scheduler.
+We start by giving the clients a maximum of 3 tickets.
+\begin{verbatim}
+// Create a new job - length chose non-deterministically
+  client1ticket1 : [0..5] init 0;
+  client1ticket2 : [0..5] init 0;
+  client1ticket3 : [0..5] init 0;
+\end{verbatim}
+Then we assign a number between 1 and 5 to the tickets.
+\begin{verbatim}
+  //One ticket has a number between 1-5
+  [createticket1] client1ticket1=0 -> 1/5 : (client1ticket1'=1) + 
+  1/5 : (client1ticket1'=2) + 1/5 : (client1ticket1'=3) 
+  + 1/5 : (client1ticket1'=4) + 1/5 : (client1ticket1'=5);
+
+  [createticket2] client1ticket2=0 -> 1/6 : (client1ticket2'=0) + 
+  1/6 : (client1ticket2'=1) + 1/6 : (client1ticket2'=2) + 
+  1/6 : (client1ticket2'=3) + 1/6 : (client1ticket2'=4) + 
+  1/6 : (client1ticket2'=5);
+
+  [createticket3] client1ticket3=0 -> 1/6 : (client1ticket3'=0) + 
+  1/6 : (client1ticket3'=1) + 1/6 : (client1ticket3'=2) + 
+  1/6 : (client1ticket3'=3) + 1/6 : (client1ticket3'=4) + 
+  1/6 : (client1ticket3'=5);
+\end{verbatim}
+Next we update the serve commands for each ticket and see if the task containing the ticket has the lowest ammount of time, or is equal to the lowest ammount of time left. If it has, then we serve it.
+This can be seen in the Appendix under B1.2.
+
+\subsubsection{b}
+
+The propability for satisfying that finished will eventually become true within 20 time units is decreased. Starvation shouldn't be possible because a task will eventually finish.
+
+\subsubsection{c}
+
+When having 4 clients, if you build the model then it will complete. However if you try to verify a property PRISM will display an error because of lack of memory.
+
+\subsubsection{d}
+
+If other jobs are shorter than one long job then the long job will never be served. The scheduler will not be vulnerable to denial of service attack because one of the 3 tasks will eventually finish.
+
+\subsubsection{e}
+Denial of service expressed as a PCTL property:
+\begin{verbatim}
+P>=1 [ G ((task!=1)&(task!=2)&(task!=3)) ]
+\end{verbatim}
+The propability is equal to 1 that globally task is neither 1,2 or 3. This means that task will never change to serve one of the clients.

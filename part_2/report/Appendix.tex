@@ -1,3 +1,142 @@
 
 \section{Appendix}
+\subsection{A1}
+\begin{alltt}
+dtmc
 
+module client1
+  state1 : [0..1] init 0; // State of the job (inactive/active)
+  task1  : [0..5] init 0; // Length of the job
+  
+  // Create a new job - length chose non-deterministically
+[create1] state1=0 -> 0.2 : (task1'=1) & (state1'=1) +
+0.2 : (task1'=2) & (state1'=1) + 0.2 : (task1'=3) & (state1'=1) +
+0.2 : (task1'=4) & (state1'=1) + 0.2 : (task1'=5) & (state1'=1);
+
+  // Serve the job
+  [serve1] state1=1 & task1>0 -> (task1'=task1-1);
+
+  // Complete the job
+  [finish1] state1=1 & task1=0 -> (state1'=0);
+
+endmodule
+
+module client2 = client1 [state1=state2,
+                          task1=task2,
+                          create1=create2,
+                          serve1=serve2,
+                          finish1=finish2 ]
+endmodule
+
+module scheduler
+  job1 : [0..2] init 0; // First job in the queue
+  job2 : [0..2] init 0; // Second job in the queue
+
+  // Place a new job at the end of the queue
+  [create1] job2=0 -> (job2'=1); 
+  [create2] job2=0 -> (job2'=2);
+
+  // Shift the queue if there is an empty slot
+  [] job1=0 & job2>0 -> (job1'=job2) & (job2'=0);
+
+  // Serve the job at the head of the queue
+  [serve1] job1=1 -> true;
+  [serve2] job1=2 -> true;
+
+  // Complete the job at the head of the queue
+  [finish1] job1=1 -> (job1'=0);
+  [finish2] job1=2 -> (job1'=0);
+
+endmodule
+
+system
+  scheduler || client1 || client2
+endsystem
+\end{alltt}
+
+\subsection{B1.2}
+\begin{alltt}
+dtmc
+
+const int QUANTUM=1;
+const int t;
+
+module client1
+  client1ticket1 : [0..5] init 0;
+  client1ticket2 : [0..5] init 0;
+  client1ticket3 : [0..5] init 0;
+
+  //One ticket has a number between 1-5
+  [createticket1] client1ticket1=0 -> 1/5 : (client1ticket1'=1) +
+  1/5 : (client1ticket1'=2) + 1/5 : (client1ticket1'=3) 
+  + 1/5 : (client1ticket1'=4) + 1/5 : (client1ticket1'=5);
+
+  [createticket2] client1ticket2=0 -> 1/6 : (client1ticket2'=0) + 
+  1/6 : (client1ticket2'=1) + 1/6 : (client1ticket2'=2) + 
+  1/6 : (client1ticket2'=3) + 1/6 : (client1ticket2'=4) + 
+  1/6 : (client1ticket2'=5);
+
+  [createticket3] client1ticket3=0 -> 1/6 : (client1ticket3'=0) + 
+  1/6 : (client1ticket3'=1) + 1/6 : (client1ticket3'=2) + 
+  1/6 : (client1ticket3'=3) + 1/6 : (client1ticket3'=4) + 
+  1/6 : (client1ticket3'=5);
+  
+  [client1serveticket1] client1ticket1>0 -> true;
+  [client1serveticket2] client1ticket2>0 -> true;
+  [client1serveticket3] client1ticket3>0 -> true;
+
+endmodule
+
+module client2 = client1 [client1ticket1=client2ticket1, 
+client1ticket2=client2ticket2, client1ticket3=client2ticket3, 
+client1serveticket1=client2serveticket1]
+endmodule
+
+module client3 = client1 [client1ticket1=client3ticket1, 
+client1ticket2=client3ticket2, client1ticket3=client3ticket3, 
+client1serveticket1=client3serveticket1]
+endmodule
+
+module scheduler
+  //Each task corresponds to each client
+  task : [1..3] init 1;
+  time1 : [0..20] init 20;
+  time2 : [0..2] init 2;
+  time3 : [0..3] init 3;
+
+  [client1serveticket1] time1>=QUANTUM & time1<=time2 & time1<=time3 -> 
+  (time1'=time1-QUANTUM) & (task'=1);
+  [client1serveticket2] time1>=QUANTUM & time1<=time2 & time1<=time3 -> 
+  (time1'=time1-QUANTUM) & (task'=1);
+  [client1serveticket3] time1>=QUANTUM & time1<=time2 & time1<=time3 -> 
+  (time1'=time1-QUANTUM) & (task'=1);
+
+  [client2serveticket1] time2>=QUANTUM & time2<=time1 & time2<=time3 -> 
+  (time2'=time2-QUANTUM) & (task'=2);
+  [client2serveticket2] time2>=QUANTUM & time2<=time1 & time2<=time3 -> 
+  (time2'=time2-QUANTUM) & (task'=2);
+  [client2serveticket3] time2>=QUANTUM & time2<=time1 & time2<=time3 -> 
+  (time2'=time2-QUANTUM) & (task'=2);
+  
+  [client3serveticket1] time3>=QUANTUM & time3<=time2 & time3<=time1 -> 
+  (time3'=time3-QUANTUM) & (task'=3);
+  [client3serveticket2] time3>=QUANTUM & time3<=time2 & time3<=time1 -> 
+  (time3'=time3-QUANTUM) & (task'=3);
+  [client3serveticket3] time3>=QUANTUM & time3<=time2 & time3<=time1 -> 
+  (time3'=time3-QUANTUM) & (task'=3);
+
+  [finish1] time1=0 -> true;
+  [finish2] time2=0 -> true;
+  [finish3] time3=0 -> true;
+endmodule
+
+module monitor
+  finished : bool init false;
+
+  [finish1] time1=0 -> (finished'=true);
+endmodule
+
+system
+  client1 || client2 || client3 || scheduler || monitor
+endsystem
+\end{alltt}
