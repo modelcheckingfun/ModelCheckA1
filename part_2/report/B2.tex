@@ -1,0 +1,63 @@
+
+\section{B2}
+
+\subsection{B2.1}
+
+\subsubsection{a}
+
+%I = [n, m], 0 <= n <= m <= inf., n, m \in N.
+%Path is s0s1s2s3...sns{n+1}s(n+2}...
+%For i = 0..n-1, M, s_i |= \Phi_1,
+%and exists j such that k = n..j-1 M, s_j |= \Phi_1, and M, s_m |= \Phi_2
+
+$\sigma = s_0 s_1 s_2 ..$.
+
+$\sigma \models \Phi_1 U^I \Phi_2$ if and only if there exists a $j$
+such that:
+
+$j \in I$
+
+$s_j \models \Phi_2$
+
+For all $i$ given by $0 \leq i < j$: $s_i \models \Phi_1$.
+
+\subsubsection{b}
+
+Case $[0, \infty)$: $\Phi_1 U \Phi_2$.
+
+Case $[0, n]$: $\Phi_1 U^{\leq n} \Phi_2$.
+
+$[n, \infty)$ and $[n, m]$ would require that the paths obey $\Phi_1$
+along the path until $n$, and after $n$ steps, another condition must hold.
+But there is no way to describe something after at least $n$ steps,
+only at most $n$ steps.
+
+\subsubsection{c}
+
+An alternative to the P state operator, named Q,
+that have four operands instead of two.
+It has the normal interval and path operands,
+but it also has a step and state formula operands.
+The Q operator requires that for a path to hold that the state formula holds
+for the first $n$ states, and then the path formula
+must hold from the $n+1$ state.
+$n$ must be at least 1.
+It would look something like $Q_{J,n, \Phi} [\phi]$.
+
+This is the way it would be used to encode the new until:
+
+$Q_{J, n, \Phi_1} [\Phi_1 U \Phi_2]$
+
+\subsubsection{d}
+
+First we get the probability matrix of going from each state to
+some state using exactly $n$ steps,
+and only using states that satisfies $\Phi_1$.
+To get this, we modify the transition system such that states that does not satisfy
+$\Phi_1$ only have self-loops to themselves.
+
+After that, we find the probability of each state satisfying $\Phi_1 U \Phi_2$.
+And then, to find the probability that a state $s_i$ satisfies $\Phi_1 U^{\geq n} \Phi_2$,
+we simply multiply each of the probabilities of going from $s_i$ to $s_j$ for all $j$ with
+the probability that $s_j$ satisfies $\Phi_1 U \Phi_2$, and sum the resulting terms.
+
