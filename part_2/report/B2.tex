@@ -64,12 +64,14 @@ the probability that $s_j$ satisfies $\Phi_1 U \Phi_2$, and sum the resulting te
 \subsection{B2.2}
 
 \subsubsection{a}
+
 The coarsest probabilistic bisimulation relation is:
 
-R \subseteq S \times S = \{\{s0s0\}, \{s1s1\}, \{s1s4\}, \{s2s2\}, \{s3s3\}, \{s4s1\}, \{s5s5\}\}
+$R \subseteq S \times S = \{\{s_0s_0\}, \{s_1s_1\}, \{s_1s_4\}, \{s_2s_2\}, \{s_3s_3\}, \{s_4s_1\}, \{s_4s_4\}, \{s_5s_5\}\}$
 
 \subsubsection{b}
-M/\sim
+
+$M/\sim$
 
 \begin{figure}[!htb]
 \centering
@@ -78,14 +80,14 @@ M/\sim
 \end{figure}
 
 \subsubsection{c}
-The relationship between the steady state distribution of M and that of bisimulation quotient M/\sim of M is:
+The relationship between the steady state distribution of $M$ and that of bisimulation quotient $M/\sim$ of $M$ is:
 
 $\forall T. \sum_{s_i \in T} \pi(i)=\pi(T)$
 
-Where T is an equivalence class
+Where $T$ is an equivalence class
 
 \subsubsection{d}
-If we were to choose a different labelling function L for the DTMC M giving the coarsest possible probabilistic bisimulation, then L should give the same label to all states.
+If we were to choose a different labelling function $L$ for the DTMC $M$ giving the coarsest possible probabilistic bisimulation, then $L$ should give the same label to all states.
 This however means that there's no difference between the states.
 
 \subsubsection{e}
@@ -99,3 +101,4 @@ and this is the same as lumpability.
 \subsubsection{f}
 Since lumpability in this case implies bisumulation quivalence, then it is not possible. Then according to theorem 10.67 that PCTL* cannot distinguish between two states that belongs to the same partion.
 Lumpability in this case implies bisimulation equivalence because the two definitions of 10.60 are satisfied.
+

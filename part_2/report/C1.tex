@@ -1,0 +1,136 @@
+
+\section{C1}
+
+The pairing of task and server is done in a two-step lottery:
+one lottery for the first server, and another lottery for
+the second server with the remaining tasks, if any.
+This will enable both the case where the servers pick
+tasks probabilistically, as well as the case where one
+server only serves the tasks that has the highest priority
+among the tasks at that point in time.
+
+For simplicity's sake, we only have two priority levels, namely 1 and 2.
+The priority affect the number of tickets for a task by multiplication
+with the priority, such that tasks with priority 2 have double the number
+of tickets compared to tasks with priority 1, assuming the tasks are eligible
+for scheduling (being in the queue, having non-zero time left, etc.).
+
+If there is one eligible task for scheduling, the first server is always picked.
+If there are two tasks, one task is given to each server.
+The case with three tasks is the only case where it matters which task gets picked,
+because one can be left out.
+
+There are two versions; one for the probabilistic choosing,
+and one with a server reserved for high-priority tasks.
+See appendix C1 for the code.
+
+We start out with some general properties.
+The first properties checks starvation.
+The three properties below checks whether it always holds,
+that whenever a client has a task,
+that task will almost certainly be finished.
+
+\begin{verbatim}
+P>=1 [G (state1=1 => !P<=0 [F state1=0]) ]: true.
+P>=1 [G (state1=1 => !P<=0 [F state1=0]) ]: true.
+P>=1 [G (state1=1 => !P<=0 [F state1=0]) ]: true.
+\end{verbatim}
+
+Then we check that it generally holds true that
+the probability for eventually starting a task is non-zero.
+
+\begin{verbatim}
+P>=1 [G (P>0 [F state1=1]) ]: true.
+P>=1 [G (P>0 [F state2=1]) ]: true.
+P>=1 [G (P>0 [F state3=1]) ]: true.
+\end{verbatim}
+
+All the properties hold for both versions of the model.
+
+Some other properties is safety properties: An example is that
+it should always hold that the servers are never serving the same task:
+
+\begin{verbatim}
+P>=1 [G (!(serv1=1 & serv2=1) ) ]: true.
+P>=1 [G (!(serv1=2 & serv2=2) ) ]: true.
+P>=1 [G (!(serv1=3 & serv2=3) ) ]: true.
+\end{verbatim}
+
+All the properties hold for both versions of the model.
+
+The relative responsiveness is modelled by using rewards.
+Every time scheduling begins,
+the rewards record how many active tasks are in the queue.
+If the relative responsiveness is low, the tasks should spend relatively much time
+in the queue, while if the relative responsiveness is high,
+the tasks should spend relatively little time in the queue.
+We find the reward by using cumulative rewards and queries.
+
+The rewards code is as follows:
+
+\begin{verbatim}
+rewards "waiting_time"
+  [schedule1] state1=1 & task1>0 : 1;
+  [schedule1] state2=1 & task2>0 : 1;
+  [schedule1] state3=1 & task3>0 : 1;
+endrewards
+\end{verbatim}
+
+For probabilistic choice between servers:
+
+\begin{verbatim}
+R=? [C<=200] ~ 72.5112.
+R=? [C<=1000] ~ 358.9560.
+R=? [C<=10000] ~ 3581.4602
+\end{verbatim}
+
+For the first server only considering the tasks with the highest priority:
+
+\begin{verbatim}
+R=? [C<=200] ~ 72.4766.
+R=? [C<=1000] ~ 358.8097.
+R=? [C<=10000] ~ 3580.0578.
+\end{verbatim}
+
+The rewards are pretty similar. This fits with the intuition that since priorities
+are independent from task length, making a server just serve jobs that have high priority
+does not influence the responsiveness.
+
+We can then consider what happens if we want the response time to be higher for
+high-priority jobs. Will the model that have a server reserved for high-priority jobs
+have a relatively lower response time than the model without such reservations for any servers?
+We measure this by increasing the reward for high-priority jobs,
+meaning that if the reward is relatively lower for one model than the other,
+then the high-priority jobs spends relatively less time in the queue than in the queue
+of the other model.
+
+\begin{verbatim}
+rewards "waiting_time"
+  [schedule1] state1=1 & task1>0 : prio1;
+  [schedule1] state2=1 & task2>0 : prio2;
+  [schedule1] state3=1 & task3>0 : prio3;
+endrewards
+\end{verbatim}
+
+For probabilistic choice between servers:
+
+\begin{verbatim}
+R=? [C<=200] ~ 106.9348.
+R=? [C<=1000] ~ 528.8627.
+R=? [C<=10000] ~ 5275.5521.
+\end{verbatim}
+
+For the first server only considering the tasks with the highest priority:
+
+\begin{verbatim}
+R=? [C<=200] ~ 105.3975.
+R=? [C<=1000] ~ 520.8725.
+R=? [C<=10000] ~ 5194.9664.
+\end{verbatim}
+
+The rewards are somewhat more different this time,
+especially in the long run.
+This fits with the intuition that if tasks with high priority
+have a server reserved for them, they are going to spend relatively
+less time in the queue than if they did not have a server reserved for them.
+
